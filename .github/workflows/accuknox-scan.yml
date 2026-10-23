@@ -1,0 +1,37 @@
+
+name: AccuKnox ASPM Container Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  container-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run AccuKnox Container Scan
+        if: github.event_name != 'pull_request'
+        uses: accuknox/container-scan-action@v1.1.0
+        with:
+          accuknox_token: ${{ secrets.ACCUKNOX_TOKEN }}
+          accuknox_label: ${{ vars.ACCUKNOX_LABEL }}
+          accuknox_endpoint: ${{ vars.ACCUKNOX_ENDPOINT }}
+          image_name: accuknox-aspm-week2
+          tag: latest
+          dockerfile_context: Dockerfile
+          severity: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
+          soft_fail: true
+          upload_results: true
+          generate_sbom: false
