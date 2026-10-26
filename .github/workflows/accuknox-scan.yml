@@ -32,6 +32,6 @@ jobs:
           tag: latest
           dockerfile_context: Dockerfile
           severity: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
-          soft_fail: true
+          soft_fail: false
           upload_results: true
           generate_sbom: false
