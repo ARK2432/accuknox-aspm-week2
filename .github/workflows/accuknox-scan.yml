@@ -1,5 +1,4 @@
-
-name: AccuKnox ASPM Container Scan
+name: AccuKnox ASPM Secret Scan
 
 on:
   push:
@@ -14,24 +13,25 @@ permissions:
   contents: read
 
 jobs:
-  container-scan:
+  secret-scan:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Run AccuKnox Container Scan
-        if: github.event_name != 'pull_request'
-        uses: accuknox/container-scan-action@v1.1.0
         with:
-          accuknox_token: ${{ secrets.ACCUKNOX_TOKEN }}
-          accuknox_label: ${{ vars.ACCUKNOX_LABEL }}
-          accuknox_endpoint: ${{ vars.ACCUKNOX_ENDPOINT }}
-          image_name: accuknox-aspm-week2
-          tag: latest
-          dockerfile_context: Dockerfile
-          severity: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
-          soft_fail: true
+          fetch-depth: 0
+
+      - name: Run AccuKnox Secret Scan
+        if: github.event_name != 'pull_request'
+        uses: accuknox/secret-scan-action@v1.0.6
+        with:
+          branch: "main"
+          results: ""
+          exclude_paths: ""
+          additional_arguments: ""
           upload_results: true
-          generate_sbom: false
+          accuknox_token: ${{ secrets.ACCUKNOX_TOKEN }}
+          accuknox_endpoint: ${{ vars.ACCUKNOX_ENDPOINT }}
+          accuknox_label: ${{ vars.ACCUKNOX_LABEL }}
+          soft_fail: true
