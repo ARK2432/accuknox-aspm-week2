@@ -23,6 +23,8 @@ jobs:
 
       - name: Run AccuKnox Secret Scan
         uses: accuknox/secret-scan-action@v1.0.6
+        env:
+          SCAN_IMAGE: ghcr.io/trufflesecurity/trufflehog:3.90.3
         with:
           branch: ${{ github.ref_name }}
           results: ""
