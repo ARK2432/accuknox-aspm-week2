@@ -1,12 +1,11 @@
+
 name: AccuKnox ASPM Secret Scan
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+      - test-secret-detection
   workflow_dispatch:
 
 permissions:
@@ -23,10 +22,9 @@ jobs:
           fetch-depth: 0
 
       - name: Run AccuKnox Secret Scan
-        if: github.event_name != 'pull_request'
         uses: accuknox/secret-scan-action@v1.0.6
         with:
-          branch: "main"
+          branch: ${{ github.ref_name }}
           results: ""
           exclude_paths: ""
           additional_arguments: ""
