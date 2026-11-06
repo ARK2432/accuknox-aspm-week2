@@ -26,7 +26,8 @@ jobs:
         env:
           SCAN_IMAGE: ghcr.io/trufflesecurity/trufflehog:3.90.3
         with:
-          branch: ${{ github.ref_name }}
+          base_command: "filesystem ."
+          branch: ""
           results: ""
           exclude_paths: ""
           additional_arguments: ""
